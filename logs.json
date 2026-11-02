@@ -1,0 +1,335 @@
+[
+  {
+    "id": 1793645410268,
+    "timestamp": "2026-11-02T18:50:10.268Z",
+    "networkIdentity": {
+      "ip": "49.36.184.214",
+      "geo": {
+        "city": "Unknown",
+        "region": "Unknown",
+        "country": "IN",
+        "timezone": "Asia/Kolkata"
+      }
+    },
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
+    "hardware": {
+      "screenResolution": "1536x864",
+      "screenColorDepth": "24-bit",
+      "logicalProcessors": 12,
+      "deviceMemoryGB": "~16 GB",
+      "isTouchDevice": false,
+      "gpuVendor": "Google Inc. (AMD)",
+      "gpuRenderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x00001638) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "language": "en-US",
+      "timezone": "Asia/Calcutta"
+    },
+    "network": {
+      "status": "Online",
+      "carrierType": "wifi/ethernet/unknown",
+      "speedClass": "4G",
+      "downlinkMbps": "1.65 Mbps",
+      "latencyMs": "50 ms"
+    },
+    "battery": {
+      "available": true,
+      "level": "100%",
+      "isCharging": "Charging ⚡"
+    }
+  },
+  {
+    "id": 1793645606182,
+    "timestamp": "2026-11-02T18:53:26.182Z",
+    "networkIdentity": {
+      "ip": "49.36.184.214",
+      "geo": {
+        "city": "Unknown",
+        "region": "Unknown",
+        "country": "IN",
+        "timezone": "Asia/Kolkata"
+      }
+    },
+    "userAgent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Mobile Safari/537.36",
+    "hardware": {
+      "screenResolution": "360x800",
+      "screenColorDepth": "24-bit",
+      "logicalProcessors": 4,
+      "deviceMemoryGB": "~2 GB",
+      "isTouchDevice": true,
+      "gpuVendor": "Google Inc. (Imagination Technologies)",
+      "gpuRenderer": "ANGLE (Imagination Technologies, PowerVR Rogue GE8300, OpenGL ES 3.2)",
+      "language": "en-IN",
+      "timezone": "Asia/Calcutta"
+    },
+    "network": {
+      "status": "Online",
+      "carrierType": "wifi",
+      "speedClass": "4G",
+      "downlinkMbps": "0.4 Mbps",
+      "latencyMs": "100 ms"
+    },
+    "battery": {
+      "available": true,
+      "level": "28%",
+      "isCharging": "Discharging 🔋"
+    }
+  },
+  {
+    "id": 1793645640185,
+    "timestamp": "2026-11-02T18:54:00.185Z",
+    "networkIdentity": {
+      "ip": "::1",
+      "geo": {
+        "city": "Local/LAN",
+        "region": "N/A",
+        "country": "Local Network",
+        "timezone": "N/A"
+      }
+    },
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
+    "hardware": {
+      "screenResolution": "1536x864",
+      "screenColorDepth": "24-bit",
+      "logicalProcessors": 12,
+      "deviceMemoryGB": "~16 GB",
+      "isTouchDevice": false,
+      "gpuVendor": "Google Inc. (AMD)",
+      "gpuRenderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x00001638) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "language": "en-US",
+      "timezone": "Asia/Calcutta"
+    },
+    "network": {
+      "status": "Online",
+      "carrierType": "wifi/ethernet/unknown",
+      "speedClass": "4G",
+      "downlinkMbps": "10 Mbps",
+      "latencyMs": "50 ms"
+    },
+    "battery": {
+      "available": true,
+      "level": "100%",
+      "isCharging": "Charging ⚡"
+    }
+  },
+  {
+    "id": 1793645858229,
+    "timestamp": "2026-11-02T18:57:38.229Z",
+    "networkIdentity": {
+      "ip": "::1",
+      "geo": {
+        "city": "Local/LAN",
+        "region": "N/A",
+        "country": "Local Network",
+        "timezone": "N/A"
+      }
+    },
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
+    "hardware": {
+      "screenResolution": "1536x864",
+      "screenColorDepth": "24-bit",
+      "logicalProcessors": 12,
+      "deviceMemoryGB": "~16 GB",
+      "isTouchDevice": false,
+      "gpuVendor": "Google Inc. (AMD)",
+      "gpuRenderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x00001638) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "language": "en-US",
+      "timezone": "Asia/Calcutta"
+    },
+    "network": {
+      "status": "Online",
+      "carrierType": "wifi/ethernet/unknown",
+      "speedClass": "4G",
+      "downlinkMbps": "10 Mbps",
+      "latencyMs": "50 ms"
+    },
+    "battery": {
+      "available": true,
+      "level": "100%",
+      "isCharging": "Charging ⚡"
+    }
+  },
+  {
+    "id": 1793646325479,
+    "timestamp": "2026-11-02T19:05:25.479Z",
+    "networkIdentity": {
+      "ip": "49.36.184.214",
+      "geo": {
+        "city": "Unknown",
+        "region": "Unknown",
+        "country": "IN",
+        "timezone": "Asia/Kolkata"
+      }
+    },
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
+    "hardware": {
+      "screenResolution": "1536x864",
+      "screenColorDepth": "24-bit",
+      "logicalProcessors": 12,
+      "deviceMemoryGB": "~16 GB",
+      "isTouchDevice": false,
+      "gpuVendor": "Google Inc. (AMD)",
+      "gpuRenderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x00001638) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "language": "en-US",
+      "timezone": "Asia/Calcutta"
+    },
+    "network": {
+      "status": "Online",
+      "carrierType": "wifi/ethernet/unknown",
+      "speedClass": "4G",
+      "downlinkMbps": "10 Mbps",
+      "latencyMs": "50 ms"
+    },
+    "battery": {
+      "available": true,
+      "level": "100%",
+      "isCharging": "Charging ⚡"
+    }
+  },
+  {
+    "id": 1793646479119,
+    "timestamp": "2026-11-02T19:07:59.119Z",
+    "networkIdentity": {
+      "ip": "49.36.184.214",
+      "geo": {
+        "city": "Unknown",
+        "region": "Unknown",
+        "country": "IN",
+        "timezone": "Asia/Kolkata"
+      }
+    },
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
+    "hardware": {
+      "screenResolution": "1536x864",
+      "screenColorDepth": "24-bit",
+      "logicalProcessors": 12,
+      "deviceMemoryGB": "~16 GB",
+      "isTouchDevice": false,
+      "gpuVendor": "Google Inc. (AMD)",
+      "gpuRenderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x00001638) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "language": "en-US",
+      "timezone": "Asia/Calcutta"
+    },
+    "network": {
+      "status": "Online",
+      "carrierType": "wifi/ethernet/unknown",
+      "speedClass": "4G",
+      "downlinkMbps": "10 Mbps",
+      "latencyMs": "50 ms"
+    },
+    "battery": {
+      "available": true,
+      "level": "100%",
+      "isCharging": "Charging ⚡"
+    }
+  },
+  {
+    "id": 1793646498273,
+    "timestamp": "2026-11-02T19:08:18.273Z",
+    "networkIdentity": {
+      "ip": "49.36.184.214",
+      "geo": {
+        "city": "Unknown",
+        "region": "Unknown",
+        "country": "IN",
+        "timezone": "Asia/Kolkata"
+      }
+    },
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
+    "hardware": {
+      "screenResolution": "1536x864",
+      "screenColorDepth": "24-bit",
+      "logicalProcessors": 12,
+      "deviceMemoryGB": "~16 GB",
+      "isTouchDevice": false,
+      "gpuVendor": "Google Inc. (AMD)",
+      "gpuRenderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x00001638) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "language": "en-US",
+      "timezone": "Asia/Calcutta"
+    },
+    "network": {
+      "status": "Online",
+      "carrierType": "wifi/ethernet/unknown",
+      "speedClass": "4G",
+      "downlinkMbps": "10 Mbps",
+      "latencyMs": "50 ms"
+    },
+    "battery": {
+      "available": true,
+      "level": "100%",
+      "isCharging": "Charging ⚡"
+    }
+  },
+  {
+    "id": 1793646508747,
+    "timestamp": "2026-11-02T19:08:28.747Z",
+    "networkIdentity": {
+      "ip": "49.36.184.214",
+      "geo": {
+        "city": "Unknown",
+        "region": "Unknown",
+        "country": "IN",
+        "timezone": "Asia/Kolkata"
+      }
+    },
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
+    "hardware": {
+      "screenResolution": "1536x864",
+      "screenColorDepth": "24-bit",
+      "logicalProcessors": 12,
+      "deviceMemoryGB": "~16 GB",
+      "isTouchDevice": false,
+      "gpuVendor": "Google Inc. (AMD)",
+      "gpuRenderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x00001638) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "language": "en-US",
+      "timezone": "Asia/Calcutta"
+    },
+    "network": {
+      "status": "Online",
+      "carrierType": "wifi/ethernet/unknown",
+      "speedClass": "4G",
+      "downlinkMbps": "10 Mbps",
+      "latencyMs": "50 ms"
+    },
+    "battery": {
+      "available": true,
+      "level": "100%",
+      "isCharging": "Charging ⚡"
+    }
+  },
+  {
+    "id": 1793646573083,
+    "timestamp": "2026-11-02T19:09:33.083Z",
+    "networkIdentity": {
+      "ip": "49.36.184.214",
+      "geo": {
+        "city": "Unknown",
+        "region": "Unknown",
+        "country": "IN",
+        "timezone": "Asia/Kolkata"
+      }
+    },
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
+    "hardware": {
+      "screenResolution": "1536x864",
+      "screenColorDepth": "24-bit",
+      "logicalProcessors": 12,
+      "deviceMemoryGB": "~16 GB",
+      "isTouchDevice": false,
+      "gpuVendor": "Google Inc. (AMD)",
+      "gpuRenderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x00001638) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "language": "en-US",
+      "timezone": "Asia/Calcutta"
+    },
+    "network": {
+      "status": "Online",
+      "carrierType": "wifi/ethernet/unknown",
+      "speedClass": "4G",
+      "downlinkMbps": "10 Mbps",
+      "latencyMs": "50 ms"
+    },
+    "battery": {
+      "available": true,
+      "level": "100%",
+      "isCharging": "Charging ⚡"
+    }
+  }
+]

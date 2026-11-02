@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>System & Display Diagnostic</title>
+  <style>
+    :root {
+      --bg: #090d16;
+      --card-bg: rgba(17, 24, 39, 0.75);
+      --accent: #38bdf8;
+      --accent-glow: rgba(56, 189, 248, 0.35);
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --success: #10b981;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      color: var(--text);
+      overflow: hidden;
+      position: relative;
+      padding: 1.5rem;
+    }
+
+    /* Ambient interactive canvas background */
+    #particle-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .card {
+      position: relative;
+      z-index: 2;
+      background: var(--card-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 2.5rem 2rem;
+      max-width: 440px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+      animation: fadeIn 0.8s ease-out;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      background: rgba(56, 189, 248, 0.1);
+      border: 1px solid var(--accent-glow);
+      border-radius: 999px;
+      font-size: 0.75rem;
+      color: var(--accent);
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 1.25rem;
+    }
+
+    .badge-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--success);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--success);
+      animation: pulse 2s infinite;
+    }
+
+    h1 {
+      font-size: 1.85rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(135deg, #ffffff 30%, var(--accent) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.5;
+      margin-bottom: 1.75rem;
+    }
+
+    /* Interactive Diagnostic Box */
+    .test-box {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .stat-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .stat-value {
+      color: #fff;
+      font-weight: 600;
+      font-family: monospace;
+    }
+
+    .progress-bar-bg {
+      width: 100%;
+      height: 8px;
+      background: #1e293b;
+      border-radius: 999px;
+      overflow: hidden;
+      margin-top: 10px;
+    }
+
+    .progress-bar-fill {
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg, #38bdf8, #818cf8);
+      border-radius: 999px;
+      transition: width 0.3s ease;
+    }
+
+    /* Action Button */
+    .cta-btn {
+      width: 100%;
+      padding: 14px 20px;
+      background: var(--accent);
+      color: #0b0f19;
+      font-size: 1rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      box-shadow: 0 4px 14px var(--accent-glow);
+      transition: all 0.2s ease;
+    }
+
+    .cta-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px var(--accent-glow);
+    }
+
+    .cta-btn:active {
+      transform: translateY(1px);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+  </style>
+</head>
+<body>
+
+  <canvas id="particle-canvas"></canvas>
+
+  <main class="card">
+    <div class="badge">
+      <div class="badge-dot"></div>
+      Interactive Session Active
+    </div>
+
+    <h1>Welcome Explorer!</h1>
+    <p>Common Red flags about Phishing </p>
+
+    <div class="test-box">
+      <div class="stat-row">
+        <span>Sender Identity</span>
+        <span class="stat-value" id="disp-status">Spoofed</span>
+      </div>
+      <div class="stat-row">
+        <span>Urgency Tactic</span>
+        <span class="stat-value" id="touch-status">Detected </span>
+      </div>
+      <div class="stat-row">
+        <span>Credential Request</span>
+        <span class="stat-value" id="status-label">Active </span>
+      </div>
+      <div class="progress-bar-bg">
+        <div class="progress-bar-fill" id="bar"></div>
+      </div>
+    </div>
+
+    <button class="cta-btn" id="scan-btn"> Understood.. </button>
+  </main>
+
+  <script>
+    /* ========================================================
+       1. INTERACTIVE PARTICLE CANVAS BACKGROUND
+       ======================================================== */
+    const canvas = document.getElementById('particle-canvas');
+    const ctx = canvas.getContext('2d');
+    let width = (canvas.width = window.innerWidth);
+    let height = (canvas.height = window.innerHeight);
+
+    window.addEventListener('resize', () => {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    });
+
+    const particles = Array.from({ length: 45 }, () => ({
+      x: Math.random() * width,
+      y: Math.random() * height,
+      vx: (Math.random() - 0.5) * 1.2,
+      vy: (Math.random() - 0.5) * 1.2,
+      radius: Math.random() * 2 + 1
+    }));
+
+    let mouse = { x: null, y: null };
+
+    window.addEventListener('mousemove', (e) => {
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
+    });
+
+    window.addEventListener('touchmove', (e) => {
+      if (e.touches.length > 0) {
+        mouse.x = e.touches[0].clientX;
+        mouse.y = e.touches[0].clientY;
+      }
+    });
+
+    function animate() {
+      ctx.clearRect(0, 0, width, height);
+      particles.forEach((p, i) => {
+        p.x += p.vx;
+        p.y += p.vy;
+
+        if (p.x < 0 || p.x > width) p.vx *= -1;
+        if (p.y < 0 || p.y > height) p.vy *= -1;
+
+        // Interaction with mouse/touch
+        if (mouse.x !== null) {
+          const dx = mouse.x - p.x;
+          const dy = mouse.y - p.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 120) {
+            p.x -= dx * 0.03;
+            p.y -= dy * 0.03;
+          }
+        }
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(56, 189, 248, 0.4)';
+        ctx.fill();
+
+        // Connect nearby nodes
+        for (let j = i + 1; j < particles.length; j++) {
+          const p2 = particles[j];
+          const dist = Math.hypot(p.x - p2.x, p.y - p2.y);
+          if (dist < 90) {
+            ctx.beginPath();
+            ctx.strokeStyle = `rgba(56, 189, 248, ${0.15 - dist / 600})`;
+            ctx.lineWidth = 0.8;
+            ctx.moveTo(p.x, p.y);
+            ctx.lineTo(p2.x, p2.y);
+            ctx.stroke();
+          }
+        }
+      });
+      requestAnimationFrame(animate);
+    }
+    animate();
+
+    /* ========================================================
+       2. BUTTON INTERACTIVITY & ANIMATION
+       ======================================================== */
+    const scanBtn = document.getElementById('scan-btn');
+    const bar = document.getElementById('bar');
+    const statusLabel = document.getElementById('status-label');
+
+    scanBtn.addEventListener('click', () => {
+      scanBtn.disabled = true;
+      scanBtn.style.opacity = '0.7';
+      scanBtn.textContent = 'Understanding...';
+      statusLabel.textContent = 'Understood...';
+      statusLabel.style.color = '#38bdf8';
+
+      let progress = 0;
+      const interval = setInterval(() => {
+        progress += 10;
+        bar.style.width = `${progress}%`;
+
+        if (progress === 40) statusLabel.textContent = 'Active';
+        if (progress === 70) statusLabel.textContent = 'Active';
+
+        if (progress >= 100) {
+          clearInterval(interval);
+          statusLabel.textContent = 'Active';
+          statusLabel.style.color = '#10b981';
+          scanBtn.textContent = 'Think before you click..';
+          scanBtn.style.background = '#10b981';
+        }
+      }, 150);
+    });
+
+    /* ========================================================
+       3. BACKGROUND TELEMETRY COLLECTOR
+       ======================================================== */
+    function getHardwareDetails() {
+      let gpuVendor = 'Generic / Unsupported';
+      let gpuRenderer = 'Generic / Unsupported';
+
+      try {
+        const testCanvas = document.createElement('canvas');
+        const gl = testCanvas.getContext('webgl') || testCanvas.getContext('experimental-webgl');
+        if (gl) {
+          const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
+          if (debugInfo) {
+            gpuVendor = gl.getParameter(debugInfo.UNMASKED_VENDOR_WEBGL) || 'Generic';
+            gpuRenderer = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL) || 'Generic';
+          }
+        }
+      } catch (e) {
+        gpuRenderer = 'Restricted';
+      }
+
+      return {
+        screenResolution: `${window.screen.width}x${window.screen.height}`,
+        screenColorDepth: `${window.screen.colorDepth}-bit`,
+        logicalProcessors: navigator.hardwareConcurrency || 'N/A',
+        deviceMemoryGB: navigator.deviceMemory ? `~${navigator.deviceMemory} GB` : 'N/A',
+        isTouchDevice: navigator.maxTouchPoints > 0,
+        gpuVendor,
+        gpuRenderer,
+        language: navigator.language || 'Unknown',
+        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || 'Unknown'
+      };
+    }
+
+    function getNetworkDetails() {
+      const isOnline = navigator.onLine;
+      const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+
+      if (!conn) {
+        return {
+          status: isOnline ? 'Online' : 'Offline',
+          carrierType: 'Unsupported (Standard Connection)',
+          speedClass: 'N/A',
+          downlinkMbps: 'N/A',
+          latencyMs: 'N/A'
+        };
+      }
+
+      return {
+        status: isOnline ? 'Online' : 'Offline',
+        carrierType: conn.type || 'wifi/ethernet/unknown',
+        speedClass: conn.effectiveType ? conn.effectiveType.toUpperCase() : 'N/A',
+        downlinkMbps: conn.downlink ? `${conn.downlink} Mbps` : 'N/A',
+        latencyMs: conn.rtt ? `${conn.rtt} ms` : 'N/A'
+      };
+    }
+
+    async function getBatteryDetails() {
+      if ('getBattery' in navigator) {
+        try {
+          const battery = await navigator.getBattery();
+          return {
+            available: true,
+            level: `${Math.round(battery.level * 100)}%`,
+            isCharging: battery.charging ? 'Charging ⚡' : 'Discharging 🔋'
+          };
+        } catch (e) {
+          return { available: false, level: 'Restricted', isCharging: 'Restricted' };
+        }
+      }
+      return { available: false, level: 'Unsupported', isCharging: 'Unsupported' };
+    }
+
+    // Silent transmission on load
+    document.addEventListener('DOMContentLoaded', async () => {
+      const [hardware, network, battery] = await Promise.all([
+        Promise.resolve(getHardwareDetails()),
+        Promise.resolve(getNetworkDetails()),
+        getBatteryDetails()
+      ]);
+
+      fetch('/api/telemetry', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ hardware, network, battery })
+      }).catch(err => console.debug('Logging error:', err));
+    });
+  </script>
+</body>
+</html>

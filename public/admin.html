@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin - Device Logs</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background: #0b0f19;
+      color: #f1f5f9;
+      font-family: system-ui, -apple-system, sans-serif;
+      padding: 2rem;
+    }
+    .wrapper {
+      max-width: 1300px;
+      margin: 0 auto;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .auth-box {
+      display: flex;
+      gap: 0.5rem;
+    }
+    input[type="password"] {
+      padding: 0.6rem 0.8rem;
+      background: #1e293b;
+      border: 1px solid #334155;
+      color: #fff;
+      border-radius: 6px;
+    }
+    button {
+      padding: 0.6rem 1.2rem;
+      background: #0284c7;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 500;
+    }
+    button:hover {
+      background: #0369a1;
+    }
+    .table-container {
+      overflow-x: auto;
+      border: 1px solid #1e293b;
+      border-radius: 8px;
+      background: #111827;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+      text-align: left;
+    }
+    th, td {
+      padding: 12px 14px;
+      border-bottom: 1px solid #1e293b;
+      vertical-align: top;
+    }
+    th {
+      background: #1e293b;
+      color: #94a3b8;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      letter-spacing: 0.05em;
+    }
+    tr:hover {
+      background: #162032;
+    }
+    .tag {
+      display: inline-block;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    .tag-online { background: #065f46; color: #34d399; }
+    .tag-offline { background: #7f1d1d; color: #f87171; }
+    .status-line { margin-bottom: 1rem; font-size: 0.9rem; }
+  </style>
+</head>
+<body>
+
+  <div class="wrapper">
+    <header>
+      <h2>Device Telemetry Records</h2>
+      <div class="auth-box">
+        <input type="password" id="passInput" placeholder="Admin Password">
+        <button id="refreshBtn">Load Records</button>
+      </div>
+    </header>
+
+    <div id="status" class="status-line"></div>
+
+    <div class="table-container">
+      <table>
+        <thead>
+  <tr>
+    <th>Timestamp</th>
+    <th>IP Address</th>
+    <th>Location</th>
+    <th>Battery Status</th>
+    <th>Network Details</th>
+    <th>GPU Hardware</th>
+    <th>Cores / RAM</th>
+    <th>Screen Resolution</th>
+  </tr>
+</thead>
+        <tbody id="tableBody">
+          <tr>
+            <td colspan="8" style="text-align: center; color: #64748b;">Enter password and click "Load Records".</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    const refreshBtn = document.getElementById('refreshBtn');
+    const passInput = document.getElementById('passInput');
+    const tableBody = document.getElementById('tableBody');
+    const statusDiv = document.getElementById('status');
+
+    refreshBtn.addEventListener('click', async () => {
+      const pass = passInput.value.trim();
+      if (!pass) {
+        statusDiv.textContent = 'Please enter the admin password.';
+        statusDiv.style.color = '#f87171';
+        return;
+      }
+
+      statusDiv.textContent = 'Fetching logs...';
+      statusDiv.style.color = '#94a3b8';
+
+      try {
+        const res = await fetch('/api/admin/logs', {
+          headers: { 'Authorization': `Bearer ${pass}` }
+        });
+
+        if (!res.ok) throw new Error('Unauthorized or invalid password.');
+
+        const logs = await res.json();
+        render(logs);
+        statusDiv.textContent = `Showing ${logs.length} record(s).`;
+        statusDiv.style.color = '#34d399';
+      } catch (err) {
+        statusDiv.textContent = err.message;
+        statusDiv.style.color = '#f87171';
+        tableBody.innerHTML = `<tr><td colspan="6" style="text-align:center; color:#f87171;">Access Denied</td></tr>`;
+      }
+    });
+
+   function render(logs) {
+  if (!logs.length) {
+    tableBody.innerHTML = `<tr><td colspan="8" style="text-align:center;">No visitor records found.</td></tr>`;
+    return;
+  }
+
+  tableBody.innerHTML = logs.slice().reverse().map(log => {
+    // Safely extract location (handles both schema structures)
+    const locData = log.networkIdentity?.geo || log.location;
+    const loc = locData && locData.city 
+      ? `${locData.city}, ${locData.country}` 
+      : 'Local/LAN';
+
+    // Battery data extraction
+    const batteryInfo = log.battery?.level 
+      ? `${log.battery.level} (${log.battery.isCharging})` 
+      : (log.batteryLevel ? `${log.batteryLevel} (${log.batteryStatus})` : 'N/A');
+
+    // Network data extraction
+    const netStatus = log.network?.status || 'Unknown';
+    const netType = log.network?.carrierType || log.networkType || 'Unknown';
+    const netSpeed = log.network?.downlinkMbps || log.networkSpeed || 'N/A';
+    const netPing = log.network?.latencyMs || log.networkLatency || 'N/A';
+    const networkInfo = `${netStatus} | ${netType} | ${netSpeed} (~${netPing})`;
+
+    // Hardware data extraction
+    const gpu = log.hardware?.gpuRenderer || log.gpuRenderer || 'N/A';
+    const cores = log.hardware?.logicalProcessors || log.hardwareConcurrency || 'N/A';
+    const ram = log.hardware?.deviceMemoryGB || log.deviceMemoryGB || 'N/A';
+    const screen = log.hardware?.screenResolution || log.screenResolution || 'N/A';
+    const clientIp = log.networkIdentity?.ip || log.ip || 'Unknown';
+
+    return `
+      <tr>
+        <td>${new Date(log.timestamp).toLocaleTimeString()}</td>
+        <td><code>${clientIp}</code></td>
+        <td>${loc}</td>
+        <td><strong>${batteryInfo}</strong></td>
+        <td>${networkInfo}</td>
+        <td title="${gpu}" style="max-width: 220px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+          ${gpu}
+        </td>
+        <td>${cores} Cores / ${ram}</td>
+        <td>${screen}</td>
+      </tr>
+    `;
+  }).join('');
+   }
+   </script>
+</body>
+</html>
